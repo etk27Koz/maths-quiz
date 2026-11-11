@@ -1,0 +1,685 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Maths Quiz</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.quiz-container {
+    background: white;
+    width: 100%;
+    max-width: 650px;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.2);
+}
+
+h1 {
+    text-align: center;
+    color: #5b4baf;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #777;
+    margin-bottom: 25px;
+}
+
+.quiz-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    color: #555;
+    font-weight: bold;
+}
+
+.progress-bar {
+    background: #e5e5e5;
+    height: 10px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    width: 0%;
+    background: #667eea;
+    transition: width 0.3s;
+}
+
+#question {
+    font-size: 21px;
+    color: #333;
+    margin-bottom: 22px;
+    line-height: 1.5;
+}
+
+.answers {
+    display: grid;
+    gap: 12px;
+}
+
+.answer {
+    background: #f4f5fb;
+    border: 2px solid transparent;
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: left;
+    transition: 0.2s;
+}
+
+.answer:hover:not(:disabled) {
+    background: #e8eaff;
+    border-color: #667eea;
+}
+
+.answer.selected {
+    border-color: #667eea;
+    background: #e8eaff;
+}
+
+.answer.correct {
+    background: #d4edda;
+    border-color: #28a745;
+    color: #155724;
+}
+
+.answer.incorrect {
+    background: #f8d7da;
+    border-color: #dc3545;
+    color: #721c24;
+}
+
+.answer:disabled {
+    cursor: default;
+}
+
+.feedback {
+    display: none;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 10px;
+    line-height: 1.5;
+}
+
+.feedback.correct-feedback {
+    display: block;
+    background: #d4edda;
+    color: #155724;
+}
+
+.feedback.wrong-feedback {
+    display: block;
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.message {
+    color: #dc3545;
+    margin-top: 12px;
+    font-size: 14px;
+    min-height: 18px;
+}
+
+button {
+    border: none;
+    border-radius: 9px;
+    padding: 13px 22px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    opacity: 0.85;
+    transform: translateY(-2px);
+}
+
+.continue-btn {
+    background: #667eea;
+    color: white;
+    width: 100%;
+    margin-top: 18px;
+}
+
+.restart-btn {
+    background: #28a745;
+    color: white;
+    margin-top: 15px;
+}
+
+.new-btn {
+    background: #764ba2;
+    color: white;
+    margin-top: 15px;
+    margin-left: 8px;
+}
+
+.button-group {
+    text-align: center;
+}
+
+.results {
+    display: none;
+    text-align: center;
+}
+
+.results h2 {
+    color: #5b4baf;
+    margin-bottom: 20px;
+}
+
+.score {
+    font-size: 45px;
+    font-weight: bold;
+    color: #667eea;
+    margin: 20px;
+}
+
+.results p {
+    color: #555;
+    line-height: 1.6;
+}
+
+@media(max-width: 500px) {
+    .quiz-container {
+        padding: 22px;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+
+    #question {
+        font-size: 18px;
+    }
+
+    .new-btn {
+        margin-left: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h1>🧮 Maths Quiz</h1>
+    <p class="subtitle">Test your mathematical knowledge!</p>
+
+    <div id="quiz-area">
+
+        <div class="quiz-info">
+            <span id="question-number">Question 1 of 10</span>
+            <span id="score-display">Score: 0</span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+
+        <h2 id="question">Question goes here</h2>
+
+        <div class="answers" id="answers"></div>
+
+        <div id="message" class="message"></div>
+
+        <div id="feedback" class="feedback"></div>
+
+        <button class="continue-btn" id="continue-btn">
+            Continue →
+        </button>
+
+    </div>
+
+    <div class="results" id="results">
+
+        <h2>🎉 Quiz Completed!</h2>
+
+        <p>Your final score is:</p>
+
+        <div class="score" id="final-score">0/10</div>
+
+        <p id="result-message"></p>
+
+    </div>
+
+    <div class="button-group">
+
+        <button class="restart-btn" onclick="restartQuiz()">
+            ↻ Restart Quiz
+        </button>
+
+        <button class="new-btn" onclick="newQuiz()">
+            ✨ New Quiz
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+// Question bank containing two different quizzes
+
+const questionBank = [
+
+    {
+        question: "What is 12 × 8?",
+        answers: ["86", "96", "108", "92"],
+        correct: 1,
+        explanation: "12 × 8 = 96. Multiplication means adding 12 together 8 times."
+    },
+    {
+        question: "What is 144 ÷ 12?",
+        answers: ["10", "11", "12", "14"],
+        correct: 2,
+        explanation: "144 ÷ 12 = 12 because 12 × 12 = 144."
+    },
+    {
+        question: "What is 25% of 200?",
+        answers: ["25", "40", "50", "75"],
+        correct: 2,
+        explanation: "25% means one quarter. 200 ÷ 4 = 50."
+    },
+    {
+        question: "What is the square root of 81?",
+        answers: ["7", "8", "9", "10"],
+        correct: 2,
+        explanation: "The square root of 81 is 9 because 9 × 9 = 81."
+    },
+    {
+        question: "What is 15 + 27?",
+        answers: ["40", "42", "43", "45"],
+        correct: 1,
+        explanation: "15 + 27 = 42. Adding the tens and units gives 42."
+    },
+    {
+        question: "What is 7²?",
+        answers: ["14", "21", "49", "56"],
+        correct: 2,
+        explanation: "7² means 7 multiplied by itself: 7 × 7 = 49."
+    },
+    {
+        question: "What is 3/4 as a percentage?",
+        answers: ["25%", "50%", "75%", "80%"],
+        correct: 2,
+        explanation: "3 ÷ 4 = 0.75. Multiply by 100 to get 75%."
+    },
+    {
+        question: "A triangle has angles of 60° and 70°. What is the third angle?",
+        answers: ["40°", "50°", "60°", "70°"],
+        correct: 1,
+        explanation: "Angles in a triangle add up to 180°. 180 - 60 - 70 = 50°."
+    },
+    {
+        question: "What is 5 × (6 + 2)?",
+        answers: ["32", "35", "40", "45"],
+        correct: 2,
+        explanation: "Work out the brackets first: 6 + 2 = 8. Then 5 × 8 = 40."
+    },
+    {
+        question: "What is the perimeter of a square with sides of 6 cm?",
+        answers: ["12 cm", "18 cm", "24 cm", "36 cm"],
+        correct: 2,
+        explanation: "A square has four equal sides. 6 × 4 = 24 cm."
+    },
+
+    // Second set of questions
+
+    {
+        question: "What is 18 × 5?",
+        answers: ["80", "85", "90", "95"],
+        correct: 2,
+        explanation: "18 × 5 = 90."
+    },
+    {
+        question: "What is 250 ÷ 5?",
+        answers: ["40", "45", "50", "55"],
+        correct: 2,
+        explanation: "250 divided by 5 equals 50 because 50 × 5 = 250."
+    },
+    {
+        question: "What is 10% of 350?",
+        answers: ["25", "30", "35", "40"],
+        correct: 2,
+        explanation: "To find 10%, divide by 10. 350 ÷ 10 = 35."
+    },
+    {
+        question: "What is the square of 11?",
+        answers: ["22", "111", "121", "132"],
+        correct: 2,
+        explanation: "11 squared means 11 × 11, which equals 121."
+    },
+    {
+        question: "What is 125 + 275?",
+        answers: ["350", "375", "400", "425"],
+        correct: 2,
+        explanation: "125 + 275 = 400."
+    },
+    {
+        question: "What is 2³?",
+        answers: ["6", "8", "9", "12"],
+        correct: 1,
+        explanation: "2³ means 2 × 2 × 2 = 8."
+    },
+    {
+        question: "What is 1/2 as a decimal?",
+        answers: ["0.2", "0.25", "0.5", "0.75"],
+        correct: 2,
+        explanation: "1 divided by 2 equals 0.5."
+    },
+    {
+        question: "How many degrees are in a right angle?",
+        answers: ["45°", "90°", "180°", "360°"],
+        correct: 1,
+        explanation: "A right angle always measures exactly 90 degrees."
+    },
+    {
+        question: "What is 9 × 9 - 10?",
+        answers: ["61", "71", "81", "91"],
+        correct: 1,
+        explanation: "9 × 9 = 81, then 81 - 10 = 71."
+    },
+    {
+        question: "What is the area of a rectangle 8 cm long and 5 cm wide?",
+        answers: ["13 cm²", "26 cm²", "40 cm²", "45 cm²"],
+        correct: 2,
+        explanation: "Area = length × width. 8 × 5 = 40 cm²."
+    }
+
+];
+
+// Quiz variables
+
+let quizQuestions = [];
+let currentQuestion = 0;
+let score = 0;
+let selectedAnswer = null;
+let submitted = false;
+
+// Shuffle questions
+
+function shuffle(array) {
+    return [...array].sort(() => Math.random() - 0.5);
+}
+
+// Start a new quiz
+
+function newQuiz() {
+
+    quizQuestions = shuffle(questionBank).slice(0, 10);
+
+    currentQuestion = 0;
+    score = 0;
+
+    document.getElementById("quiz-area").style.display = "block";
+    document.getElementById("results").style.display = "none";
+
+    loadQuestion();
+}
+
+// Restart the same quiz
+
+function restartQuiz() {
+
+    currentQuestion = 0;
+    score = 0;
+
+    document.getElementById("quiz-area").style.display = "block";
+    document.getElementById("results").style.display = "none";
+
+    loadQuestion();
+}
+
+// Display question
+
+function loadQuestion() {
+
+    selectedAnswer = null;
+    submitted = false;
+
+    const q = quizQuestions[currentQuestion];
+
+    document.getElementById("question").textContent = q.question;
+
+    document.getElementById("question-number").textContent =
+        `Question ${currentQuestion + 1} of 10`;
+
+    document.getElementById("score-display").textContent =
+        `Score: ${score}`;
+
+    document.getElementById("progress").style.width =
+        `${(currentQuestion / 10) * 100}%`;
+
+    document.getElementById("message").textContent = "";
+
+    const feedback = document.getElementById("feedback");
+
+    feedback.style.display = "none";
+    feedback.className = "feedback";
+
+    const answersContainer = document.getElementById("answers");
+
+    answersContainer.innerHTML = "";
+
+    q.answers.forEach((answer, index) => {
+
+        const button = document.createElement("button");
+
+        button.className = "answer";
+
+        button.textContent =
+            String.fromCharCode(65 + index) + ". " + answer;
+
+        button.onclick = () => selectAnswer(index);
+
+        answersContainer.appendChild(button);
+
+    });
+
+    document.getElementById("continue-btn").textContent = "Continue →";
+
+}
+
+// Select an answer
+
+function selectAnswer(index) {
+
+    if (submitted) return;
+
+    selectedAnswer = index;
+
+    const buttons = document.querySelectorAll(".answer");
+
+    buttons.forEach((button, i) => {
+
+        button.classList.toggle("selected", i === index);
+
+    });
+
+    document.getElementById("message").textContent = "";
+
+}
+
+// Submit answer or move to next question
+
+function continueQuiz() {
+
+    // Check if an answer has been selected
+
+    if (selectedAnswer === null && !submitted) {
+
+        document.getElementById("message").textContent =
+            "⚠️ Please select an answer before continuing!";
+
+        return;
+
+    }
+
+    // First click: check answer
+
+    if (!submitted) {
+
+        checkAnswer();
+
+        return;
+
+    }
+
+    // Second click: move to next question
+
+    currentQuestion++;
+
+    if (currentQuestion < 10) {
+
+        loadQuestion();
+
+    } else {
+
+        showResults();
+
+    }
+
+}
+
+// Check whether the answer is correct
+
+function checkAnswer() {
+
+    submitted = true;
+
+    const q = quizQuestions[currentQuestion];
+
+    const buttons = document.querySelectorAll(".answer");
+
+    const feedback = document.getElementById("feedback");
+
+    const isCorrect = selectedAnswer === q.correct;
+
+    buttons.forEach((button, index) => {
+
+        button.disabled = true;
+
+        if (index === q.correct) {
+
+            button.classList.add("correct");
+
+        } else if (index === selectedAnswer) {
+
+            button.classList.add("incorrect");
+
+        }
+
+    });
+
+    if (isCorrect) {
+
+        score++;
+
+        feedback.className = "feedback correct-feedback";
+
+        feedback.innerHTML =
+            "<strong>✓ Correct answer!</strong><br>" +
+            q.explanation;
+
+    } else {
+
+        feedback.className = "feedback wrong-feedback";
+
+        feedback.innerHTML =
+            "<strong>✗ Incorrect answer!</strong><br>" +
+            "The correct answer is: " +
+            q.answers[q.correct] + ".<br>" +
+            q.explanation;
+
+    }
+
+    feedback.style.display = "block";
+
+    document.getElementById("score-display").textContent =
+        `Score: ${score}`;
+
+    document.getElementById("message").textContent = "";
+
+    document.getElementById("continue-btn").textContent =
+        currentQuestion === 9 ? "View Results →" : "Next Question →";
+
+}
+
+// Show final results
+
+function showResults() {
+
+    document.getElementById("quiz-area").style.display = "none";
+
+    document.getElementById("results").style.display = "block";
+
+    document.getElementById("progress").style.width = "100%";
+
+    document.getElementById("final-score").textContent =
+        `${score}/10`;
+
+    let message = "";
+
+    if (score === 10) {
+
+        message = "🏆 Perfect score! Excellent mathematical skills!";
+
+    } else if (score >= 7) {
+
+        message = "👏 Great work! You have a strong understanding of maths.";
+
+    } else if (score >= 5) {
+
+        message = "👍 Good effort! Keep practising to improve your score.";
+
+    } else {
+
+        message = "💪 Keep practising! Every attempt helps you improve.";
+
+    }
+
+    const percentage = score * 10;
+
+    document.getElementById("result-message").textContent =
+        message + ` You achieved ${percentage}%.`;
+
+}
+
+// Button event
+
+document.getElementById("continue-btn").onclick = continueQuiz;
+
+// Start the first quiz
+
+newQuiz();
+
+</script>
+
+</body>
+</html>
