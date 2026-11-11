@@ -1,34 +1,54 @@
-<!DOCTYPE html>
 
+<!DOCTYPE html>
 <html>
 
 <head>
-
-<title>Welcome to my fun maths quiz!</title>
+    <title>My Maths Quiz</title>
 
     <style>
         body {
-            font-family:arial;
-            background-color: dark grey;
+            font-family: Arial;
+            background-color: #292929;
             text-align: center;
             padding: 30px;
         }
 
         .quiz {
             background-color: white;
+            color: black;
             padding: 25px;
             border-radius: 10px;
             max-width: 500px;
             margin: auto;
+        }
 
-            
+        h1 {
+            color: red;
+        }
+
+        button {
+            background-color: red;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        #error {
+            color: red;
+            font-weight: bold;
+        }
+
         #feedback {
             font-weight: bold;
         }
     </style>
-</head?
+</head>
 
-    <body>
+<body>
+
 <div class="quiz">
 
     <h1>Maths Quiz</h1>
@@ -37,208 +57,223 @@
 
     <h2 id="question"></h2>
 
-        <div id="answers"></div>
+    <div id="answers"></div>
 
-        <p id="error"></p>
+    <p id="error"></p>
 
-        <p id="feedback"></p>
+    <p id="feedback"></p>
 
-        <button id="checkButton" onclick="checkAnswer()">
-            Check Answer
-        </button>
+    <button onclick="checkAnswer()" id="checkButton">
+        Check Answer
+    </button>
 
-     <button id="nextButton" onclick="nextQuestion()" hidden>
-            Next Question
-        </button>
+    <button onclick="nextQuestion()" id="nextButton" hidden>
+        Next Question
+    </button>
 
-        <h2 id="score"></h2>
+    <h2 id="score">Score: 0</h2>
 
-        <button onclick="restartQuiz()">
-            Restart Quiz
-        </button>
+    <button onclick="restartQuiz()">
+        Restart Quiz
+    </button>
 
-        <button onclick="newQuiz()">
-            New Quiz
-        </button>
+    <button onclick="newQuiz()">
+        New Quiz
+    </button>
 
 </div>
-        <script>
 
-// our Maths Questions
-            l
-let questions = [
-    {
-        question: "What is 5 + 7?",
-        answers: ["10", "12", "14", "15"],
-        correct: "12"
-    },
-    {
-        question: "What is 10 × 4?",
-        answers: ["20", "30", "40", "50"],
-        correct: "40"
-    },
-    {
-        question: "What is 20 - 8?",
-        answers: ["10", "12", "14", "16"],
-        correct: "12"
-    }
-];
 
-let currentQuestion = 0;
+<script>
+
+// VARIABLES
+
+let questionNumber = 1;
 let score = 0;
+let question = 1;
 
-function displayQuestion() {
 
-    document.getElementById("error").textContent = "";
-    document.getElementById("feedback").textContent = "";
+// SHOW THE QUESTION
 
-    document.getElementById("questionNumber").textContent =
-        "Question " + (currentQuestion + 1) + " of " + questions.length;
+function showQuestion() {
 
-    document.getElementById("question").textContent =
-        questions[currentQuestion].question;
+    document.getElementById("error").innerHTML = "";
+    document.getElementById("feedback").innerHTML = "";
 
-    let answersHTML = "";
+    document.getElementById("questionNumber").innerHTML =
+        "Question " + questionNumber;
 
-    questions[currentQuestion].answers.forEach(answer => {
-        answersHTML += `
-            <label style="display:block; margin:10px;">
-                <input type="radio" name="answer" value="${answer}">
-                ${answer}
-            </label>
-        `;
-    });
+    if (question == 1) {
 
-    document.getElementById("answers").innerHTML = answersHTML;
+        document.getElementById("question").innerHTML =
+            "What is 5 + 5?";
+
+        document.getElementById("answers").innerHTML =
+            '<input type="radio" name="answer" value="10"> 10 <br>' +
+            '<input type="radio" name="answer" value="15"> 15 <br>' +
+            '<input type="radio" name="answer" value="20"> 20';
+
+    }
+
+    else if (question == 2) {
+
+        document.getElementById("question").innerHTML =
+            "What is 10 x 2?";
+
+        document.getElementById("answers").innerHTML =
+            '<input type="radio" name="answer" value="10"> 10 <br>' +
+            '<input type="radio" name="answer" value="20"> 20 <br>' +
+            '<input type="radio" name="answer" value="30"> 30';
+
+    }
+
+    else if (question == 3) {
+
+        document.getElementById("question").innerHTML =
+            "What is 20 - 5?";
+
+        document.getElementById("answers").innerHTML =
+            '<input type="radio" name="answer" value="10"> 10 <br>' +
+            '<input type="radio" name="answer" value="15"> 15 <br>' +
+            '<input type="radio" name="answer" value="20"> 20';
+
+    }
 
     document.getElementById("checkButton").hidden = false;
     document.getElementById("nextButton").hidden = true;
 
-    document.getElementById("score").textContent =
-        "Score: " + score;
 }
+
+
+// CHECK THE ANSWER
 
 function checkAnswer() {
 
-    let selectedAnswer = document.querySelector(
+    let answer = document.querySelector(
         'input[name="answer"]:checked'
     );
 
-    // Show red error if no answer is selected
-    if (!selectedAnswer) {
-        document.getElementById("error").textContent =
-            "Please select an answer before continuing!";
+    if (answer == null) {
 
-        document.getElementById("error").style.color = "red";
-        return;
+        document.getElementById("error").innerHTML =
+            "Please select an answer!";
+
     }
 
-    document.getElementById("error").textContent = "";
+    else {
 
-    let correctAnswer = questions[currentQuestion].correct;
+        let correctAnswer;
 
-    if (selectedAnswer.value === correctAnswer) {
+        if (question == 1) {
+            correctAnswer = "10";
+        }
 
-        score++;
+        else if (question == 2) {
+            correctAnswer = "20";
+        }
 
-        document.getElementById("feedback").textContent =
-            "Correct! Well done!";
+        else if (question == 3) {
+            correctAnswer = "15";
+        }
 
-        document.getElementById("feedback").style.color = "green";
+        if (answer.value == correctAnswer) {
 
-    } else {
+            document.getElementById("feedback").innerHTML =
+                "Correct! Well done!";
 
-        document.getElementById("feedback").textContent =
-            "Incorrect! The correct answer was " + correctAnswer;
+            document.getElementById("feedback").style.color = "green";
 
-        document.getElementById("feedback").style.color = "red";
+            score = score + 1;
+
+        }
+
+        else {
+
+            document.getElementById("feedback").innerHTML =
+                "Incorrect! The answer was " + correctAnswer;
+
+            document.getElementById("feedback").style.color = "red";
+
+        }
+
+        document.getElementById("score").innerHTML =
+            "Score: " + score;
+
+        document.getElementById("checkButton").hidden = true;
+        document.getElementById("nextButton").hidden = false;
+
     }
 
-    document.getElementById("score").textContent =
-        "Score: " + score;
-
-    document.getElementById("checkButton").hidden = true;
-    document.getElementById("nextButton").hidden = false;
 }
+
+
+// NEXT QUESTION
 
 function nextQuestion() {
 
-    if (currentQuestion < questions.length - 1) {
+    question = question + 1;
+    questionNumber = questionNumber + 1;
 
-        currentQuestion++;
-        displayQuestion();
+    if (question > 3) {
 
-    } else {
-
-        document.getElementById("question").textContent =
-            "Quiz complete!";
-
-        document.getElementById("questionNumber").textContent = "";
+        document.getElementById("question").innerHTML =
+            "Quiz finished!";
 
         document.getElementById("answers").innerHTML = "";
 
-        document.getElementById("feedback").textContent =
-            "You scored " + score + " out of " + questions.length + "!";
-
-        document.getElementById("feedback").style.color = "white";
+        document.getElementById("questionNumber").innerHTML = "";
 
         document.getElementById("nextButton").hidden = true;
-        document.getElementById("checkButton").hidden = true;
+
+        document.getElementById("feedback").innerHTML =
+            "You scored " + score + " out of 3!";
+
     }
+
+    else {
+
+        showQuestion();
+
+    }
+
 }
 
-// Restart the same quiz
+
+// RESTART QUIZ
+
 function restartQuiz() {
 
-    currentQuestion = 0;
+    question = 1;
+    questionNumber = 1;
     score = 0;
 
-    displayQuestion();
+    document.getElementById("score").innerHTML = "Score: 0";
+
+    showQuestion();
+
 }
 
-// Start a new quiz with shuffled questions
+
+// NEW QUIZ
+
 function newQuiz() {
 
-    questions.sort(() => Math.random() - 0.5);
-
-    currentQuestion = 0;
+    question = 1;
+    questionNumber = 1;
     score = 0;
 
-    displayQuestion();
+    document.getElementById("score").innerHTML = "Score: 0";
+
+    showQuestion();
+
 }
 
-// Display the first question
-displayQuestion();
 
-        </body>
+// START QUIZ
 
+showQuestion();
 
+</script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-</head>
+</body>
 </html>
