@@ -65,265 +65,152 @@
         <script>
 
 // our Maths Questions
-            let questions= [ 
-                {
-                question: "what is 5 + 10?",
-                answers: ["7", "10"' "15"],
-                correct: "15",
-                explanaition: "5 plus 10 equals 15."
-            },
-                {
-                question: "what is 6 x 10?",
-                answers: ["16", "60", "55"],
-                correct: "60",
-                explanaition: "6 times 10 equals 60."
-            },
-                {
-                question: "what is 5 divided by 10?",
-                answers: ["2", "0.25"' "0.2"],
-                correct: "0.2",
-                explanaition: "5 divided 10 equals 0.2,"
-            },
-                {
-                question: "what is 60 + 70?",
-                answers: ["13", "120"' "130"],
-                correct: "130",
-                explanaition: "60 plus 70 equals 130."
-            },
-                {
-                question: "what is 3 x 4?",
-                answers: ["7", "12"' "15"],
-                correct: "12",
-                explanaition: "3 x 4 equals 12."
-            },
-                {
-                question: "what is 15 - 5?",
-                answers: ["7", "10"' "20"],
-                correct: "10",
-                explanaition: "15 minus 5 equals 10."
-            },
-                {
-                question: "what is 5 x 5?",
-                answers: ["25", "10"' "30"],
-                correct: "25",
-                explanaition: "5 x 5 equals 25."
-            },
-                {
-                question: "what is 5 - 10?",
-                answers: ["-7", "-10"' "-5"],
-                correct: "-5",
-                explanaition: "5 minus 10 equals -5."
-            },
-                {
-                question: "what is 5 + 10 - 3?",
-                answers: ["12", "10"' "15"],
-                correct: "12",
-                explanaition: "5 plus 10 minus 3 equals 12."
-            },
-                {
-                question: "what is the square root of 144?",
-                answers: ["7", "10"' "12"],
-                correct: "12",
-                explanaition: "the square root of 144 equals 12"
-            },
+            l
+let questions = [
+    {
+        question: "What is 5 + 7?",
+        answers: ["10", "12", "14", "15"],
+        correct: "12"
+    },
+    {
+        question: "What is 10 × 4?",
+        answers: ["20", "30", "40", "50"],
+        correct: "40"
+    },
+    {
+        question: "What is 20 - 8?",
+        answers: ["10", "12", "14", "16"],
+        correct: "12"
+    }
+];
 
-                // Variables to keep track of the quiz
+let currentQuestion = 0;
+let score = 0;
 
-        let currentQuestion = 0;
-        let score = 0;
-        let answered = false;
+function displayQuestion() {
 
+    document.getElementById("error").textContent = "";
+    document.getElementById("feedback").textContent = "";
 
-        // Show a question
+    document.getElementById("questionNumber").textContent =
+        "Question " + (currentQuestion + 1) + " of " + questions.length;
 
-        function showQuestion() {
+    document.getElementById("question").textContent =
+        questions[currentQuestion].question;
 
-            answered = false;
+    let answersHTML = "";
 
-            document.getElementById("error").innerText = "";
-            document.getElementById("feedback").innerText = "";
+    questions[currentQuestion].answers.forEach(answer => {
+        answersHTML += `
+            <label style="display:block; margin:10px;">
+                <input type="radio" name="answer" value="${answer}">
+                ${answer}
+            </label>
+        `;
+    });
 
-            document.getElementById("questionNumber").innerText =
-                "Question " + (currentQuestion + 1) + " of 10";
+    document.getElementById("answers").innerHTML = answersHTML;
 
-            document.getElementById("question").innerText =
-                questions[currentQuestion].question;
+    document.getElementById("checkButton").hidden = false;
+    document.getElementById("nextButton").hidden = true;
 
-            document.getElementById("answers").innerHTML = "";
+    document.getElementById("score").textContent =
+        "Score: " + score;
+}
 
-            // Show the answer choices
+function checkAnswer() {
 
-            for (let i = 0; i < 3; i++) {
+    let selectedAnswer = document.querySelector(
+        'input[name="answer"]:checked'
+    );
 
-                document.getElementById("answers").innerHTML +=
-                    '<label><input type="radio" name="answer" value="' +
-                    questions[currentQuestion].answers[i] +
-                    '"> ' +
-                    questions[currentQuestion].answers[i] +
-                    '</label>';
+    // Show red error if no answer is selected
+    if (!selectedAnswer) {
+        document.getElementById("error").textContent =
+            "Please select an answer before continuing!";
 
-            }
+        document.getElementById("error").style.color = "red";
+        return;
+    }
 
-            document.getElementById("checkButton").hidden = false;
-            document.getElementById("nextButton").hidden = true;
+    document.getElementById("error").textContent = "";
 
-        }
+    let correctAnswer = questions[currentQuestion].correct;
 
+    if (selectedAnswer.value === correctAnswer) {
 
-        // Check the selected answer
+        score++;
 
-        function checkAnswer() {
+        document.getElementById("feedback").textContent =
+            "Correct! Well done!";
 
-            let selectedAnswer =
-                document.querySelector('input[name="answer"]:checked');
+        document.getElementById("feedback").style.color = "green";
 
-            // Check if an answer has been selected
+    } else {
 
-            if (selectedAnswer == null) {
+        document.getElementById("feedback").textContent =
+            "Incorrect! The correct answer was " + correctAnswer;
 
-                document.getElementById("error").innerText =
-                    "Please select an answer!";
-                
+        document.getElementById("feedback").style.color = "red";
+    }
 
-                return;
+    document.getElementById("score").textContent =
+        "Score: " + score;
 
-            }
+    document.getElementById("checkButton").hidden = true;
+    document.getElementById("nextButton").hidden = false;
+}
 
-            document.getElementById("error").innerText = "";
+function nextQuestion() {
 
-            let correctAnswer = questions[currentQuestion].correct;
+    if (currentQuestion < questions.length - 1) {
 
-            let explanation = questions[currentQuestion].explanation;
+        currentQuestion++;
+        displayQuestion();
 
-            // Check if the answer is correct
+    } else {
 
-            if (selectedAnswer.value == correctAnswer) {
+        document.getElementById("question").textContent =
+            "Quiz complete!";
 
-                document.getElementById("feedback").innerText =
-                    "Correct! " + explanation;
+        document.getElementById("questionNumber").textContent = "";
 
-                score++;
+        document.getElementById("answers").innerHTML = "";
 
-            } else {
+        document.getElementById("feedback").textContent =
+            "You scored " + score + " out of " + questions.length + "!";
 
-                document.getElementById("feedback").innerText =
-                    "Incorrect! The correct answer is " +
-                    correctAnswer + ". " + explanation;
+        document.getElementById("feedback").style.color = "white";
 
-            }
+        document.getElementById("nextButton").hidden = true;
+        document.getElementById("checkButton").hidden = true;
+    }
+}
 
-            // Stop the user changing their answer
+// Restart the same quiz
+function restartQuiz() {
 
-            let allAnswers = document.querySelectorAll('input[name="answer"]');
+    currentQuestion = 0;
+    score = 0;
 
-            for (let i = 0; i < allAnswers.length; i++) {
-                allAnswers[i].disabled = true;
-            }
+    displayQuestion();
+}
 
-            answered = true;
+// Start a new quiz with shuffled questions
+function newQuiz() {
 
-            document.getElementById("checkButton").hidden = true;
-            document.getElementById("nextButton").hidden = false;
+    questions.sort(() => Math.random() - 0.5);
 
-            document.getElementById("score").innerText =
-                "Your score: " + score;
+    currentQuestion = 0;
+    score = 0;
 
-        }
+    displayQuestion();
+}
 
+// Display the first question
+displayQuestion();
 
-        // Move to the next question
-
-        function nextQuestion() {
-
-            if (!answered) {
-                return;
-            }
-
-            currentQuestion++;
-
-            // Check if the quiz has finished
-
-            if (currentQuestion < 10) {
-
-                showQuestion();
-
-            } else {
-
-                showFinalScore();
-
-            }
-
-        }
-
-
-        // Show the final percentage score
-
-        function showFinalScore() {
-
-            let percentage = (score / 10) * 100;
-
-            document.getElementById("questionNumber").innerText =
-                "Quiz Complete!";
-
-            document.getElementById("question").innerText =
-                "Well Done!";
-
-            document.getElementById("answers").innerHTML = "";
-
-            document.getElementById("feedback").innerText =
-                "You got " + score + " out of 10 questions correct!";
-
-            document.getElementById("score").innerText =
-                "Your final percentage is " + percentage + "%";
-
-            document.getElementById("checkButton").hidden = true;
-            document.getElementById("nextButton").hidden = true;
-
-        }
-
-
-        // Restart the same quiz
-
-        function restartQuiz() {
-
-            currentQuestion = 0;
-            score = 0;
-
-            showQuestion();
-
-            document.getElementById("score").innerText = "";
-          
-
-        }
-
-
-        // Start a new quiz with shuffled questions
-
-        function newQuiz() {
-
-            questions.sort(function() {
-                return Math.random() - 0.5;
-            });
-
-            restartQuiz();
-
-        }
-
-
-        // Start the quiz when the page loads
-
-        showQuestion();
-            
-                
-        </script>
-
-
-
-
-        
-    </body>
-
-
+        </body>
 
 
 
