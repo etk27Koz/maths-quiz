@@ -71,7 +71,7 @@
         Next Question
     </button>
 
-    <h2 id="score">Score: 0</h2>
+    <h2 id="score">Score: 0%</h2>
 
     <button onclick="restartQuiz()">
         Restart Quiz
@@ -101,7 +101,7 @@ function showQuestion() {
     document.getElementById("feedback").innerHTML = "";
 
     document.getElementById("questionNumber").innerHTML =
-        "Question " + questionNumber;
+        "Question " + questionNumber + " of 10";
 
     if (question == 1) {
 
@@ -136,6 +136,90 @@ function showQuestion() {
             '<input type="radio" name="answer" value="10"> 10 <br>' +
             '<input type="radio" name="answer" value="15"> 15 <br>' +
             '<input type="radio" name="answer" value="20"> 20';
+
+    }
+
+    else if (question == 4) {
+
+        document.getElementById("question").innerHTML =
+            "What is 8 x 3?";
+
+        document.getElementById("answers").innerHTML =
+            '<input type="radio" name="answer" value="21"> 21 <br>' +
+            '<input type="radio" name="answer" value="24"> 24 <br>' +
+            '<input type="radio" name="answer" value="27"> 27';
+
+    }
+
+    else if (question == 5) {
+
+        document.getElementById("question").innerHTML =
+            "What is 50 divided by 5?";
+
+        document.getElementById("answers").innerHTML =
+            '<input type="radio" name="answer" value="5"> 5 <br>' +
+            '<input type="radio" name="answer" value="10"> 10 <br>' +
+            '<input type="radio" name="answer" value="15"> 15';
+
+    }
+
+    else if (question == 6) {
+
+        document.getElementById("question").innerHTML =
+            "What is 12 + 9?";
+
+        document.getElementById("answers").innerHTML =
+            '<input type="radio" name="answer" value="19"> 19 <br>' +
+            '<input type="radio" name="answer" value="21"> 21 <br>' +
+            '<input type="radio" name="answer" value="23"> 23';
+
+    }
+
+    else if (question == 7) {
+
+        document.getElementById("question").innerHTML =
+            "What is 100 - 45?";
+
+        document.getElementById("answers").innerHTML =
+            '<input type="radio" name="answer" value="45"> 45 <br>' +
+            '<input type="radio" name="answer" value="55"> 55 <br>' +
+            '<input type="radio" name="answer" value="65"> 65';
+
+    }
+
+    else if (question == 8) {
+
+        document.getElementById("question").innerHTML =
+            "What is 9 x 9?";
+
+        document.getElementById("answers").innerHTML =
+            '<input type="radio" name="answer" value="72"> 72 <br>' +
+            '<input type="radio" name="answer" value="81"> 81 <br>' +
+            '<input type="radio" name="answer" value="90"> 90';
+
+    }
+
+    else if (question == 9) {
+
+        document.getElementById("question").innerHTML =
+            "What is 36 divided by 4?";
+
+        document.getElementById("answers").innerHTML =
+            '<input type="radio" name="answer" value="8"> 8 <br>' +
+            '<input type="radio" name="answer" value="9"> 9 <br>' +
+            '<input type="radio" name="answer" value="10"> 10';
+
+    }
+
+    else if (question == 10) {
+
+        document.getElementById("question").innerHTML =
+            "What is 15 + 15?";
+
+        document.getElementById("answers").innerHTML =
+            '<input type="radio" name="answer" value="25"> 25 <br>' +
+            '<input type="radio" name="answer" value="30"> 30 <br>' +
+            '<input type="radio" name="answer" value="35"> 35';
 
     }
 
@@ -176,6 +260,34 @@ function checkAnswer() {
             correctAnswer = "15";
         }
 
+        else if (question == 4) {
+            correctAnswer = "24";
+        }
+
+        else if (question == 5) {
+            correctAnswer = "10";
+        }
+
+        else if (question == 6) {
+            correctAnswer = "21";
+        }
+
+        else if (question == 7) {
+            correctAnswer = "55";
+        }
+
+        else if (question == 8) {
+            correctAnswer = "81";
+        }
+
+        else if (question == 9) {
+            correctAnswer = "9";
+        }
+
+        else if (question == 10) {
+            correctAnswer = "30";
+        }
+
         if (answer.value == correctAnswer) {
 
             document.getElementById("feedback").innerHTML =
@@ -214,7 +326,9 @@ function nextQuestion() {
     question = question + 1;
     questionNumber = questionNumber + 1;
 
-    if (question > 3) {
+    if (question > 10) {
+
+        let percentage = (score / 10) * 100;
 
         document.getElementById("question").innerHTML =
             "Quiz finished!";
@@ -226,7 +340,12 @@ function nextQuestion() {
         document.getElementById("nextButton").hidden = true;
 
         document.getElementById("feedback").innerHTML =
-            "You scored " + score + " out of 3!";
+            "You scored " + percentage + "%!";
+
+        document.getElementById("feedback").style.color = "red";
+
+        document.getElementById("score").innerHTML =
+            "Final Score: " + percentage + "%";
 
     }
 
@@ -247,7 +366,7 @@ function restartQuiz() {
     questionNumber = 1;
     score = 0;
 
-    document.getElementById("score").innerHTML = "Score: 0";
+    document.getElementById("score").innerHTML = "Score: 0%";
 
     showQuestion();
 
@@ -262,7 +381,7 @@ function newQuiz() {
     questionNumber = 1;
     score = 0;
 
-    document.getElementById("score").innerHTML = "Score: 0";
+    document.getElementById("score").innerHTML = "Score: 0%";
 
     showQuestion();
 
