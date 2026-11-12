@@ -8,54 +8,85 @@
 
     <title>My Maths Quiz</title>
 
-    
     <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
 
-    <div class="quiz">
+    <main class="quiz">
 
-        <h1>Maths Quiz</h1>
+        <h1>🧮 Maths Quiz</h1>
+
+        <!-- Keyboard Instructions -->
 
         <div class="keyboard-help">
-    <p><strong>Keyboard Controls</strong></p>
-    <p>1–4: Select answer | C: Check answer</p>
-    <p>N: Next question | R: Restart quiz</p>
-    <p>Tab: Move between buttons | Enter: Select</p>
-</div>
 
-        <p id="questionNumber"></p>
+            <h3>Keyboard Controls</h3>
+
+            <p><strong>1 - 4:</strong> Select an answer</p>
+
+            <p><strong>C:</strong> Check answer</p>
+
+            <p><strong>N:</strong> Next question</p>
+
+            <p><strong>R:</strong> Restart quiz</p>
+
+            <p><strong>Tab:</strong> Move between buttons</p>
+
+            <p><strong>Enter / Space:</strong> Activate button</p>
+
+        </div>
+
+        <!-- Question Information -->
+
+        <p id="questionNumber" aria-live="polite"></p>
 
         <h2 id="question"></h2>
 
+        <!-- Answers -->
+
         <div id="answers"></div>
 
-        <p id="error"></p>
+        <!-- Error and Feedback -->
 
-        <p id="feedback"></p>
+        <p id="error" role="alert"></p>
 
-        <button onclick="checkAnswer()" id="checkButton">
-            Check Answer
-        </button>
+        <p id="feedback" aria-live="polite"></p>
 
-        <button onclick="nextQuestion()" id="nextButton" hidden>
-            Next Question
-        </button>
+        <!-- Quiz Buttons -->
 
-        <h2 id="score">Score: 0%</h2>
+        <div class="quiz-buttons">
 
-        <button onclick="restartQuiz()">
-            Restart Quiz
-        </button>
+            <button onclick="checkAnswer()" id="checkButton">
+                Check Answer
+            </button>
 
-        <button onclick="newQuiz()">
-            New Quiz
-        </button>
+            <button onclick="nextQuestion()" id="nextButton" hidden>
+                Next Question
+            </button>
 
-    </div>
+        </div>
 
- 
+        <!-- Score -->
+
+        <h2 id="score" aria-live="polite">Score: 0%</h2>
+
+        <!-- Extra Buttons -->
+
+        <div class="extra-buttons">
+
+            <button onclick="restartQuiz()" class="secondary">
+                Restart Quiz
+            </button>
+
+            <button onclick="newQuiz()" class="secondary">
+                New Quiz
+            </button>
+
+        </div>
+
+    </main>
+
     <script src="../javascript/script.js"></script>
 
 </body>
