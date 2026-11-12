@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,6 +7,7 @@
 
     <title>My Maths Quiz</title>
 
+    <!-- Connect CSS -->
     <link rel="stylesheet" href="../css/style.css">
 </head>
 
@@ -17,69 +17,47 @@
 
         <h1>🧮 Maths Quiz</h1>
 
-        <!-- Keyboard Instructions -->
-
         <div class="keyboard-help">
-
             <h3>Keyboard Controls</h3>
-
-            <p><strong>1 - 4:</strong> Select an answer</p>
-
-            <p><strong>C:</strong> Check answer</p>
-
-            <p><strong>N:</strong> Next question</p>
-
-            <p><strong>R:</strong> Restart quiz</p>
-
-            <p><strong>Tab:</strong> Move between buttons</p>
-
-            <p><strong>Enter / Space:</strong> Activate button</p>
-
+            <p>1–4: Select an answer</p>
+            <p>C: Check answer</p>
+            <p>N: Next question</p>
+            <p>R: Restart quiz</p>
+            <p>Tab: Move between buttons</p>
+            <p>Enter / Space: Activate button</p>
         </div>
-
-        <!-- Question Information -->
 
         <p id="questionNumber" aria-live="polite"></p>
 
         <h2 id="question"></h2>
 
-        <!-- Answers -->
-
         <div id="answers"></div>
-
-        <!-- Error and Feedback -->
 
         <p id="error" role="alert"></p>
 
         <p id="feedback" aria-live="polite"></p>
 
-        <!-- Quiz Buttons -->
-
         <div class="quiz-buttons">
 
-            <button onclick="checkAnswer()" id="checkButton">
+            <button type="button" onclick="checkAnswer()" id="checkButton">
                 Check Answer
             </button>
 
-            <button onclick="nextQuestion()" id="nextButton" hidden>
+            <button type="button" onclick="nextQuestion()" id="nextButton" hidden>
                 Next Question
             </button>
 
         </div>
 
-        <!-- Score -->
-
         <h2 id="score" aria-live="polite">Score: 0%</h2>
-
-        <!-- Extra Buttons -->
 
         <div class="extra-buttons">
 
-            <button onclick="restartQuiz()" class="secondary">
+            <button type="button" onclick="restartQuiz()" class="secondary">
                 Restart Quiz
             </button>
 
-            <button onclick="newQuiz()" class="secondary">
+            <button type="button" onclick="newQuiz()" class="secondary">
                 New Quiz
             </button>
 
@@ -87,6 +65,7 @@
 
     </main>
 
+    <!-- Connect JavaScript -->
     <script src="../javascript/script.js"></script>
 
 </body>
