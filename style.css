@@ -10,13 +10,10 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #e5e5e5;
-
     min-height: 100vh;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     padding: 20px;
 }
 
@@ -25,18 +22,12 @@ body {
 
 .quiz {
     background-color: white;
-
     width: 100%;
     max-width: 750px;
-
     min-height: 500px;
-
     padding: clamp(20px, 5vw, 50px);
-
     border-radius: 15px;
-
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-
     text-align: center;
 }
 
@@ -54,7 +45,7 @@ h3 {
 }
 
 #questionNumber {
-    font-size: clamp(14px, 2vw, 18px);
+    font-size: 18px;
     color: #555;
     font-weight: bold;
     margin-bottom: 20px;
@@ -68,7 +59,7 @@ h3 {
 }
 
 
-/* KEYBOARD INSTRUCTIONS */
+/* KEYBOARD HELP */
 
 .keyboard-help {
     background-color: #f1f1f1;
@@ -85,49 +76,30 @@ h3 {
 
 #answers {
     display: grid;
-
     grid-template-columns: repeat(2, minmax(0, 1fr));
-
     gap: 15px;
-
     margin-bottom: 25px;
 }
 
 
-/* ALL BUTTONS */
+/* BUTTONS */
 
 button {
     width: 100%;
-
     min-height: 55px;
-
     padding: 15px;
-
     background-color: #457b9d;
-
     color: white;
-
     font-size: 16px;
-
     font-weight: bold;
-
     border: none;
-
     border-radius: 10px;
-
     cursor: pointer;
-
-    transition: background-color 0.2s ease,
-                transform 0.2s ease;
+    transition: background-color 0.2s ease;
 }
 
 button:hover:not(:disabled) {
     background-color: #1d5d7a;
-    transform: translateY(-2px);
-}
-
-button:active:not(:disabled) {
-    transform: scale(0.98);
 }
 
 button:disabled {
@@ -156,7 +128,7 @@ button:focus-visible {
 }
 
 
-/* MAIN QUIZ BUTTONS */
+/* QUIZ BUTTONS */
 
 .quiz-buttons {
     display: flex;
@@ -228,10 +200,6 @@ button:focus-visible {
         min-height: auto;
     }
 
-    #answers {
-        gap: 12px;
-    }
-
 }
 
 
@@ -250,14 +218,6 @@ button:focus-visible {
         margin: 10px auto;
         border-radius: 12px;
         min-height: auto;
-    }
-
-    h1 {
-        margin-bottom: 20px;
-    }
-
-    #question {
-        margin-bottom: 20px;
     }
 
     #answers {
