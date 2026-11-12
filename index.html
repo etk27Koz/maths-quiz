@@ -169,11 +169,13 @@ let questions = [
 
         let answersHTML = "";
 
-        q.answers.forEach(function(answer) {
-            answersHTML += '
-                <button onclick="selectedAnswer(${answer}')">${answer}</button>
-                          ';
-    });
+q.answers.forEach(function(answer) {
+    answersHTML += `
+        DIL0
+    `;
+});
+
+document.getElementById("answers").innerHTML = answersHTML;
     documentgetElementById("answers").innerHTML = answersHTML;
 
     document.getElementId("error").innerText = "";
