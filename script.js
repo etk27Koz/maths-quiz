@@ -1,111 +1,155 @@
 
+// ======================================
+// MATHS QUIZ QUESTIONS
+// ======================================
+
 let questions = [
+
     {
         question: "What is 2 + 2?",
         answers: ["3", "4", "5", "10"],
         correct: "4",
         explanation: "Two plus two equals four."
     },
+
     {
         question: "What is 2 x 4?",
         answers: ["6", "5", "8", "10"],
         correct: "8",
         explanation: "Two times four equals eight."
     },
+
     {
         question: "What is 3 divided by 3?",
         answers: ["0", "1", "3", "10"],
         correct: "1",
         explanation: "Three divided by three equals one."
     },
+
     {
         question: "What is 5 x 7?",
         answers: ["30", "25", "35", "40"],
         correct: "35",
         explanation: "Five times seven equals 35."
     },
+
     {
         question: "What is 4 x 6?",
         answers: ["20", "24", "28", "30"],
         correct: "24",
         explanation: "Four times six equals 24."
     },
+
     {
         question: "What is 8 x 5?",
         answers: ["35", "45", "40", "50"],
         correct: "40",
         explanation: "Eight times five equals 40."
     },
+
     {
         question: "What is 9 x 3?",
         answers: ["18", "21", "27", "30"],
         correct: "27",
         explanation: "Nine times three equals 27."
     },
+
     {
         question: "What is 7 x 8?",
         answers: ["54", "56", "48", "64"],
         correct: "56",
         explanation: "Seven times eight equals 56."
     },
+
     {
         question: "What is 6 x 7?",
         answers: ["36", "40", "42", "48"],
         correct: "42",
         explanation: "Six times seven equals 42."
     },
+
     {
         question: "What is 12 x 4?",
         answers: ["36", "44", "48", "52"],
         correct: "48",
         explanation: "Twelve times four equals 48."
     }
+
 ];
 
+
+// ======================================
+// QUIZ VARIABLES
+// ======================================
+
 let currentQuestion = 0;
+
 let score = 0;
+
 let selectedAnswer = "";
+
 let answerChecked = false;
 
 
-// Display the current question
+// ======================================
+// DISPLAY QUESTION
+// ======================================
+
 function showQuestion() {
 
     let q = questions[currentQuestion];
 
     document.getElementById("questionNumber").innerText =
-        "Question " + (currentQuestion + 1) + " of " + questions.length;
+        "Question " + (currentQuestion + 1) +
+        " of " + questions.length;
 
-    document.getElementById("question").innerText = q.question;
+    document.getElementById("question").innerText =
+        q.question;
 
     let answersHTML = "";
 
-    q.answers.forEach(function(answer) {
+    q.answers.forEach(function(answer, index) {
 
         answersHTML += `
-            <button onclick="selectAnswer('${answer}')">
+            <button
+                type="button"
+                aria-pressed="false"
+                aria-label="Answer ${index + 1}: ${answer}"
+                onclick="selectAnswer('${answer}')">
+
                 ${answer}
+
             </button>
         `;
 
     });
 
-    document.getElementById("answers").innerHTML = answersHTML;
+    document.getElementById("answers").innerHTML =
+        answersHTML;
 
     document.getElementById("error").innerText = "";
+
     document.getElementById("feedback").innerText = "";
 
     document.getElementById("feedback").style.color = "";
 
     document.getElementById("checkButton").disabled = false;
+
+    document.getElementById("checkButton").hidden = false;
+
     document.getElementById("nextButton").hidden = true;
 
     selectedAnswer = "";
+
     answerChecked = false;
+
 }
 
 
-// Select an answer
+// ======================================
+// SELECT ANSWER
+// ======================================
+
 function selectAnswer(answer) {
 
     if (answerChecked) return;
@@ -116,10 +160,42 @@ function selectAnswer(answer) {
 
     document.getElementById("feedback").innerText =
         "You selected: " + answer;
+
+    // Remove previous selection
+
+    document.querySelectorAll("#answers button").forEach(
+        function(button) {
+
+            button.classList.remove("selected");
+
+            button.setAttribute("aria-pressed", "false");
+
+        }
+    );
+
+    // Highlight selected answer
+
+    document.querySelectorAll("#answers button").forEach(
+        function(button) {
+
+            if (button.innerText.trim() === answer) {
+
+                button.classList.add("selected");
+
+                button.setAttribute("aria-pressed", "true");
+
+            }
+
+        }
+    );
+
 }
 
 
-// Check the answer
+// ======================================
+// CHECK ANSWER
+// ======================================
+
 function checkAnswer() {
 
     if (selectedAnswer === "") {
@@ -128,6 +204,7 @@ function checkAnswer() {
             "Please select an answer!";
 
         return;
+
     }
 
     let q = questions[currentQuestion];
@@ -139,14 +216,17 @@ function checkAnswer() {
         document.getElementById("feedback").innerText =
             "Correct! ✅ " + q.explanation;
 
-        document.getElementById("feedback").style.color = "green";
+        document.getElementById("feedback").style.color =
+            "green";
 
     } else {
 
         document.getElementById("feedback").innerText =
             "Incorrect! ❌ " + q.explanation;
 
-        document.getElementById("feedback").style.color = "red";
+        document.getElementById("feedback").style.color =
+            "red";
+
     }
 
     answerChecked = true;
@@ -159,11 +239,28 @@ function checkAnswer() {
         "Score: " + percentage + "%";
 
     document.getElementById("checkButton").disabled = true;
+
     document.getElementById("nextButton").hidden = false;
+
+    // Prevent changing answers after checking
+
+    document.querySelectorAll("#answers button").forEach(
+        function(button) {
+
+            button.disabled = true;
+
+        }
+    );
+
+    document.getElementById("nextButton").focus();
+
 }
 
 
-// Move to the next question
+// ======================================
+// NEXT QUESTION
+// ======================================
+
 function nextQuestion() {
 
     currentQuestion++;
@@ -175,11 +272,16 @@ function nextQuestion() {
     } else {
 
         finishQuiz();
+
     }
+
 }
 
 
-// Finish the quiz
+// ======================================
+// FINISH QUIZ
+// ======================================
+
 function finishQuiz() {
 
     let percentage = Math.round(
@@ -202,32 +304,137 @@ function finishQuiz() {
         "Final Score: " + percentage + "%";
 
     document.getElementById("checkButton").hidden = true;
+
     document.getElementById("nextButton").hidden = true;
+
+    document.getElementById("feedback").focus();
+
 }
 
 
-// Restart the same quiz
+// ======================================
+// RESTART QUIZ
+// ======================================
+
 function restartQuiz() {
 
     currentQuestion = 0;
+
     score = 0;
 
-    document.getElementById("checkButton").hidden = false;
-
-    document.getElementById("score").innerText = "Score: 0%";
+    document.getElementById("score").innerText =
+        "Score: 0%";
 
     showQuestion();
+
 }
 
 
-// Create a new shuffled quiz
+// ======================================
+// NEW SHUFFLED QUIZ
+// ======================================
+
 function newQuiz() {
 
     questions.sort(() => Math.random() - 0.5);
 
     restartQuiz();
+
 }
 
 
-// Start the quiz
+// ======================================
+// KEYBOARD CONTROLS
+// ======================================
+
+document.addEventListener("keydown", function(event) {
+
+    // Ignore shortcuts when typing in form fields
+
+    if (
+        event.target.matches("input, textarea, select") ||
+        event.target.isContentEditable
+    ) {
+        return;
+    }
+
+    // Ignore shortcuts with modifier keys
+
+    if (
+        event.ctrlKey ||
+        event.altKey ||
+        event.metaKey
+    ) {
+        return;
+    }
+
+    // Prevent repeated key presses
+
+    if (event.repeat) return;
+
+    let key = event.key.toLowerCase();
+
+
+    // SELECT ANSWERS USING 1, 2, 3 OR 4
+
+    if (["1", "2", "3", "4"].includes(key)) {
+
+        if (answerChecked) return;
+
+        let answerIndex = Number(key) - 1;
+
+        let answerButtons = document.querySelectorAll(
+            "#answers button"
+        );
+
+        if (answerButtons[answerIndex]) {
+
+            answerButtons[answerIndex].click();
+
+        }
+
+    }
+
+
+    // CHECK ANSWER USING C
+
+    else if (key === "c") {
+
+        if (!answerChecked) {
+
+            checkAnswer();
+
+        }
+
+    }
+
+
+    // NEXT QUESTION USING N
+
+    else if (key === "n") {
+
+        if (answerChecked) {
+
+            nextQuestion();
+
+        }
+
+    }
+
+
+    // RESTART QUIZ USING R
+
+    else if (key === "r") {
+
+        restartQuiz();
+
+    }
+
+});
+
+
+// ======================================
+// START QUIZ
+// ======================================
+
 showQuestion();
