@@ -1,0 +1,49 @@
+style.css
+
+ <style>
+        body {
+            font-family: Arial;
+            background-color: darkgrey;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .quiz {
+            background-color: grey;
+            width: 700px;
+            min-height: 500px;
+            padding: 50px;
+            border-radius: 10px;
+            margin: auto;
+        }
+
+        h1 {
+            color: red;
+        }
+
+        button {
+            background-color: darkgrey;
+            color: "white", "bold";
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            width: 300px;
+            min-height: 50px;
+        }
+
+        button:disabled {
+            background-color: grey;
+            cursor: default;
+        }
+
+        #error {
+            color: red;
+            font-weight: bold;
+        }
+
+        #feedback {
+            font-weight: bold;
+        }
+    </style>
