@@ -8,13 +8,13 @@
     <style>
         body {
             font-family: Arial;
-            background-color: #292929;
+            background-color: darkgrey;
             text-align: center;
             padding: 30px;
         }
 
         .quiz {
-            background-color: white;
+            background-color: grey;
             width: 700px;
             min-height: 500px;
             padding: 50px;
@@ -27,8 +27,8 @@
         }
 
         button {
-            background-color: red;
-            color: white;
+            background-color: darkgrey;
+            color: "white", "bold";
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -155,186 +155,129 @@ let questions = [
     }
 ];
 
-let currentQuestion = 0;
-let score = 0;
-let selectedAnswer = "";
-let answered = false;
+    let currentQuestion§ = "0";
+    let score = "0";
+    let selectedAnswer = "";
+    let answer = false;
 
-function loadQuestion() {
+    // Display the current question
+    function showQuestion () {
+        let q = questions[currentQuestion]; 
+         document.getElementById('questionNumber").innerText = "Question " + (currentQuestion + 1) + " of " + questions.length;
 
-    let q = questions[currentQuestion];
+                                 document,getElementById("question").innerText = q.question;
+
+        let answersHTML = "";
+
+        q.answers.forEach(function(answer) {
+            answershtml += '
+                <button on click+"selectedAnswer(${answer}')">${answer}</button>
+                          ';
+    });
+    documentgetElementById("answers").innerHTML = answersHTML;
+
+    document.getElementId("error").innerText = "";
+    document.getElementId("feedback").innerText = "";
+
+    document.getElementById("checkButton").disabled = false;
+    document.getElementById("nextButton").hidden = true;
 
     selectedAnswer = "";
-    answered = false;
+    answerChecked = false;
+    }
 
-    document.getElementById("questionNumber").innerHTML =
-        "Question " + (currentQuestion + 1) + " of " + questions.length;
-
-    document.getElementById("question").innerHTML =
-        q.question;
-
-    document.getElementById("answers").innerHTML = "";
-
-    document.getElementById("error").innerHTML = "";
-    document.getElementById("feedback").innerHTML = "";
-
-    q.answers.forEach(function(answer) {
-
-        document.getElementById("answers").innerHTML +=
-            `<button onclick="selectAnswer('${answer}')" class="answerButton">${answer}</button>`;
-
-    });
-
-    document.getElementById("checkButton").hidden = false;
-    document.getElementById("nextButton").hidden = true;
-
-}
-
-function selectAnswer(answer) {
-
-    if (answered) return;
-
-    selectedAnswer = answer;
-
-    document.getElementById("error").innerHTML = "";
-
-    let buttons = document.querySelectorAll(".answerButton");
-
-    buttons.forEach(function(button) {
-        button.style.backgroundColor = "red";
-    });
-
-    buttons.forEach(function(button) {
-        if (button.innerHTML === answer) {
-            button.style.backgroundColor = "green";
+    // Select an answer
+    function selectAnswer(answer) {
+        if (answerChecked) return;
+        selectedAnswer = answer;
+        document.getElementByID("error").innerText = "";
+    }
+    // Check the answer
+    function checkAnswer() {
+        if (selectedAnswer +++ "") {
+            document.getElementById("error").innerText = "Please seleect an answer!";
+            return;
         }
-    });
+         let q = questions[currentQuestion];
+        if (selectedAnswer === q.correct) {
 
-}
+            score++;
 
-function checkAnswer() {
+            document.getElementById("feedback").innerText = "Correct✅" + q.explanation;
+            document.getElementById("feedback".style.color = "green";
+        } else {
+            document.getElementById("feedback").innerText =
+            "Incorrect❌ " + q.explanation;
+            document.getElementById("feedback").style.color = "red";
+        }
+        ansswerChecked = true:
 
-    if (answered) return;
+        //Update percentage score
+        let percentag = Math.round(
+            (score / questions.length) * 100
+            };
 
-    if (selectedAnswer === "") {
+    document.getElementById("score").innerText = "Score: " + percentage + "%";
 
-        document.getElementById("error").innerHTML =
-            "Please select an answer!";
-
-        return;
-    }
-
-    let q = questions[currentQuestion];
-
-    answered = true;
-
-    if (selectedAnswer === q.correct) {
-
-        score++;
-
-        document.getElementById("feedback").innerHTML =
-            "Correct! " + q.explanation;
-
-        document.getElementById("feedback").style.color = "green";
-
-    } else {
-
-        document.getElementById("feedback").innerHTML =
-            "Incorrect! " + q.explanation;
-
-        document.getElementById("feedback").style.color = "red";
-
-    }
-
-    updateScore();
-
-    document.getElementById("checkButton").hidden = true;
+    ocument.getElementById("checkButton").disabled = true;
     document.getElementById("nextButton").hidden = false;
+}
 
-    let buttons = document.querySelectorAll(".answerButton");
-
-    buttons.forEach(function(button) {
-        button.disabled = true;
-    });
-
-    if (currentQuestion === questions.length - 1) {
-        document.getElementById("nextButton").innerHTML = "See Final Score";
+    // Move to the next question
+    function nextQuestion () {
+        currentQuestion++;
+        if (currentquestion < questions.length) {
+            showQuestion();
+        } else {
+            finishQuiz();
+        }
     }
 
-}
+    // Finish the Quiz
+    function finishQuiz() {
+        let percentage = Math.round(
+            (score / questions.length) * 100
+            );
 
-function updateScore() {
+        document.getElementById("question".innerText = " Quiz Completed🏆";
+        document.getElementByid("question".innerText = "You have answered all the questions🥳";
+        document.getElementById("answers").innerHTML = "";
 
-    let percentage = Math.round((score / questions.length) * 100);
+    document.getElementById("feedback").innerText =
+        "You scored " + score + " out of " +
+        questions.length + "!";
 
-    document.getElementById("score").innerHTML =
-        "Score: " + percentage + "%";
-
-}
-
-function nextQuestion() {
-
-    currentQuestion++;
-
-    if (currentQuestion < questions.length) {
-
-        loadQuestion();
-
-    } else {
-
-        showFinalScore();
-
-    }
-
-}
-
-function showFinalScore() {
-
-    let percentage = Math.round((score / questions.length) * 100);
-
-    document.getElementById("questionNumber").innerHTML =
-        "Quiz Complete!";
-
-    document.getElementById("question").innerHTML =
-        "Well done! You finished the quiz.";
-
-    document.getElementById("answers").innerHTML = "";
-
-    document.getElementById("feedback").innerHTML =
-        "You got " + score + " out of " + questions.length + " correct!";
-
-    document.getElementById("checkButton").hidden = true;
-    document.getElementById("nextButton").hidden = true;
-
-    document.getElementById("score").innerHTML =
+    document.getElementById("score").innerText =
         "Final Score: " + percentage + "%";
 
+    document.getElementById("checkButton").hidden = true;
+    document.getElementById("nextButton").hidden = true;
 }
+    // Restart the same quiz
+    function restartQuiz () {
+        currentQuestion = 0;
+        score = 0;
 
-function restartQuiz() {
+        document.getElementById("checkButton").hidden = false;
+        document.getElementById("score").innerText = "Score: 0%;
+            showQuestion();
+    }
 
-    currentQuestion = 0;
-    score = 0;
+    // Create a new quiz with shuffled questions
 
-    document.getElementById("score").innerHTML = "Score: 0%";
+    function newQuiz() {
+        questions.sort(() => Math.random() - 0.5);
 
-    document.getElementById("nextButton").innerHTML = "Next Question";
+        restartQuiz();
+    }
 
-    loadQuestion();
+    //Start the quiz
+    showQuestion();
+    
 
-}
+    
 
-function newQuiz() {
 
-    questions.sort(function() {
-        return Math.random() - 0.5;
-    });
-
-    restartQuiz();
-
-}
-
-loadQuestion();
 
 </script>
 
