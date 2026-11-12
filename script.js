@@ -78,9 +78,9 @@ let questions = [
 ];
 
 
-// ======================================
+
 // QUIZ VARIABLES
-// ======================================
+
 
 let currentQuestion = 0;
 let score = 0;
@@ -88,9 +88,8 @@ let selectedAnswer = "";
 let answerChecked = false;
 
 
-// ======================================
 // DISPLAY QUESTION
-// ======================================
+
 
 function showQuestion() {
 
@@ -143,9 +142,9 @@ function showQuestion() {
 }
 
 
-// ======================================
+
 // SELECT ANSWER
-// ======================================
+
 
 function selectAnswer(answer) {
 
@@ -179,9 +178,8 @@ function selectAnswer(answer) {
 }
 
 
-// ======================================
+
 // CHECK ANSWER
-// ======================================
 
 function checkAnswer() {
 
@@ -240,9 +238,9 @@ function checkAnswer() {
 }
 
 
-// ======================================
+
 // NEXT QUESTION
-// ======================================
+
 
 function nextQuestion() {
 
@@ -261,9 +259,9 @@ function nextQuestion() {
 }
 
 
-// ======================================
+
 // FINISH QUIZ
-// ======================================
+
 
 function finishQuiz() {
 
@@ -293,9 +291,9 @@ function finishQuiz() {
 }
 
 
-// ======================================
+
 // RESTART QUIZ
-// ======================================
+
 
 function restartQuiz() {
 
@@ -311,9 +309,8 @@ function restartQuiz() {
 }
 
 
-// ======================================
 // NEW SHUFFLED QUIZ
-// ======================================
+
 
 function newQuiz() {
 
@@ -324,9 +321,8 @@ function newQuiz() {
 }
 
 
-// ======================================
+
 // KEYBOARD CONTROLS
-// ======================================
 
 document.addEventListener("keydown", function(event) {
 
@@ -403,8 +399,8 @@ document.addEventListener("keydown", function(event) {
 });
 
 
-// ======================================
+
 // START QUIZ
-// ======================================
+
 
 showQuestion();
