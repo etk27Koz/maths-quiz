@@ -10,6 +10,7 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #e5e5e5;
+
     min-height: 100vh;
 
     display: flex;
@@ -48,6 +49,10 @@ h1 {
     margin-bottom: 25px;
 }
 
+h3 {
+    margin-bottom: 10px;
+}
+
 #questionNumber {
     font-size: clamp(14px, 2vw, 18px);
     color: #555;
@@ -60,6 +65,19 @@ h1 {
     margin-bottom: 25px;
     color: #222;
     overflow-wrap: anywhere;
+}
+
+
+/* KEYBOARD INSTRUCTIONS */
+
+.keyboard-help {
+    background-color: #f1f1f1;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 20px 0;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #333;
 }
 
 
@@ -119,6 +137,22 @@ button:disabled {
 
 button[hidden] {
     display: none;
+}
+
+
+/* KEYBOARD FOCUS */
+
+button:focus-visible {
+    outline: 4px solid #ff9800;
+    outline-offset: 4px;
+}
+
+
+/* SELECTED ANSWER */
+
+#answers button.selected {
+    background-color: #264653;
+    outline: 3px solid #e9c46a;
 }
 
 
@@ -215,6 +249,7 @@ button[hidden] {
         padding: 25px 15px;
         margin: 10px auto;
         border-radius: 12px;
+        min-height: auto;
     }
 
     h1 {
@@ -251,29 +286,4 @@ button[hidden] {
         margin: 25px 0 15px;
     }
 
-}
-/* Keyboard instructions */
-
-.keyboard-help {
-    background-color: #f1f1f1;
-    padding: 15px;
-    border-radius: 10px;
-    margin: 20px 0;
-    font-size: 14px;
-    line-height: 1.6;
-    color: #333;
-}
-
-/* Make keyboard focus visible */
-
-button:focus-visible {
-    outline: 4px solid #ff9800;
-    outline-offset: 4px;
-}
-
-/* Highlight selected answer */
-
-#answers button.selected {
-    background-color: #264653;
-    outline: 3px solid #e9c46a;
 }
