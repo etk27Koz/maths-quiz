@@ -83,11 +83,8 @@ let questions = [
 // ======================================
 
 let currentQuestion = 0;
-
 let score = 0;
-
 let selectedAnswer = "";
-
 let answerChecked = false;
 
 
@@ -161,22 +158,12 @@ function selectAnswer(answer) {
     document.getElementById("feedback").innerText =
         "You selected: " + answer;
 
-    // Remove previous selection
-
     document.querySelectorAll("#answers button").forEach(
         function(button) {
 
             button.classList.remove("selected");
 
             button.setAttribute("aria-pressed", "false");
-
-        }
-    );
-
-    // Highlight selected answer
-
-    document.querySelectorAll("#answers button").forEach(
-        function(button) {
 
             if (button.innerText.trim() === answer) {
 
@@ -214,7 +201,7 @@ function checkAnswer() {
         score++;
 
         document.getElementById("feedback").innerText =
-            "Correct! ✅ " + q.explanation;
+            "Correct! " + q.explanation;
 
         document.getElementById("feedback").style.color =
             "green";
@@ -222,7 +209,7 @@ function checkAnswer() {
     } else {
 
         document.getElementById("feedback").innerText =
-            "Incorrect! ❌ " + q.explanation;
+            "Incorrect! " + q.explanation;
 
         document.getElementById("feedback").style.color =
             "red";
@@ -242,13 +229,9 @@ function checkAnswer() {
 
     document.getElementById("nextButton").hidden = false;
 
-    // Prevent changing answers after checking
-
     document.querySelectorAll("#answers button").forEach(
         function(button) {
-
             button.disabled = true;
-
         }
     );
 
@@ -289,10 +272,10 @@ function finishQuiz() {
     );
 
     document.getElementById("question").innerText =
-        "Quiz Completed! 🏆";
+        "Quiz Completed!";
 
     document.getElementById("questionNumber").innerText =
-        "Well done! 🥳";
+        "Well done!";
 
     document.getElementById("answers").innerHTML = "";
 
@@ -306,8 +289,6 @@ function finishQuiz() {
     document.getElementById("checkButton").hidden = true;
 
     document.getElementById("nextButton").hidden = true;
-
-    document.getElementById("feedback").focus();
 
 }
 
@@ -349,8 +330,6 @@ function newQuiz() {
 
 document.addEventListener("keydown", function(event) {
 
-    // Ignore shortcuts when typing in form fields
-
     if (
         event.target.matches("input, textarea, select") ||
         event.target.isContentEditable
@@ -358,24 +337,19 @@ document.addEventListener("keydown", function(event) {
         return;
     }
 
-    // Ignore shortcuts with modifier keys
-
     if (
         event.ctrlKey ||
         event.altKey ||
-        event.metaKey
+        event.metaKey ||
+        event.repeat
     ) {
         return;
     }
 
-    // Prevent repeated key presses
-
-    if (event.repeat) return;
-
     let key = event.key.toLowerCase();
 
 
-    // SELECT ANSWERS USING 1, 2, 3 OR 4
+    // SELECT ANSWERS WITH 1, 2, 3 OR 4
 
     if (["1", "2", "3", "4"].includes(key)) {
 
@@ -396,33 +370,29 @@ document.addEventListener("keydown", function(event) {
     }
 
 
-    // CHECK ANSWER USING C
+    // CHECK ANSWER WITH C
 
     else if (key === "c") {
 
         if (!answerChecked) {
-
             checkAnswer();
-
         }
 
     }
 
 
-    // NEXT QUESTION USING N
+    // NEXT QUESTION WITH N
 
     else if (key === "n") {
 
         if (answerChecked) {
-
             nextQuestion();
-
         }
 
     }
 
 
-    // RESTART QUIZ USING R
+    // RESTART WITH R
 
     else if (key === "r") {
 
