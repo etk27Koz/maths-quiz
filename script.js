@@ -1,5 +1,3 @@
-<script>
-
 
 let questions = [
     {
@@ -69,6 +67,7 @@ let score = 0;
 let selectedAnswer = "";
 let answerChecked = false;
 
+
 // Display the current question
 function showQuestion() {
 
@@ -82,11 +81,13 @@ function showQuestion() {
     let answersHTML = "";
 
     q.answers.forEach(function(answer) {
+
         answersHTML += `
             <button onclick="selectAnswer('${answer}')">
                 ${answer}
             </button>
         `;
+
     });
 
     document.getElementById("answers").innerHTML = answersHTML;
@@ -94,12 +95,15 @@ function showQuestion() {
     document.getElementById("error").innerText = "";
     document.getElementById("feedback").innerText = "";
 
+    document.getElementById("feedback").style.color = "";
+
     document.getElementById("checkButton").disabled = false;
     document.getElementById("nextButton").hidden = true;
 
     selectedAnswer = "";
     answerChecked = false;
 }
+
 
 // Select an answer
 function selectAnswer(answer) {
@@ -114,12 +118,15 @@ function selectAnswer(answer) {
         "You selected: " + answer;
 }
 
+
 // Check the answer
 function checkAnswer() {
 
     if (selectedAnswer === "") {
+
         document.getElementById("error").innerText =
             "Please select an answer!";
+
         return;
     }
 
@@ -155,17 +162,22 @@ function checkAnswer() {
     document.getElementById("nextButton").hidden = false;
 }
 
+
 // Move to the next question
 function nextQuestion() {
 
     currentQuestion++;
 
     if (currentQuestion < questions.length) {
+
         showQuestion();
+
     } else {
+
         finishQuiz();
     }
 }
+
 
 // Finish the quiz
 function finishQuiz() {
@@ -193,6 +205,7 @@ function finishQuiz() {
     document.getElementById("nextButton").hidden = true;
 }
 
+
 // Restart the same quiz
 function restartQuiz() {
 
@@ -206,6 +219,7 @@ function restartQuiz() {
     showQuestion();
 }
 
+
 // Create a new shuffled quiz
 function newQuiz() {
 
@@ -214,7 +228,6 @@ function newQuiz() {
     restartQuiz();
 }
 
+
 // Start the quiz
 showQuestion();
-
-</script>
