@@ -252,3 +252,28 @@ button[hidden] {
     }
 
 }
+/* Keyboard instructions */
+
+.keyboard-help {
+    background-color: #f1f1f1;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 20px 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Make keyboard focus visible */
+
+button:focus-visible {
+    outline: 4px solid #ff9800;
+    outline-offset: 4px;
+}
+
+/* Highlight selected answer */
+
+#answers button.selected {
+    background-color: #264653;
+    outline: 3px solid #e9c46a;
+}
