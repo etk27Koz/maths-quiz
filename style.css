@@ -1,49 +1,68 @@
-style.css
 
- <style>
-        body {
-            font-family: Arial;
-            background-color: darkgrey;
-            text-align: center;
-            padding: 30px;
-        }
+body {
+    font-family: Arial, sans-serif;
+    background-color: darkgrey;
+    text-align: center;
+    padding: 30px;
+}
 
-        .quiz {
-            background-color: grey;
-            width: 700px;
-            min-height: 500px;
-            padding: 50px;
-            border-radius: 10px;
-            margin: auto;
-        }
+.quiz {
+    background-color: grey;
+    width: 700px;
+    min-height: 500px;
+    padding: 50px;
+    border-radius: 10px;
+    margin: auto;
+    box-sizing: border-box;
+}
 
-        h1 {
-            color: red;
-        }
+h1 {
+    color: red;
+}
 
-        button {
-            background-color: darkgrey;
-            color: "white", "bold";
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 5px;
-            width: 300px;
-            min-height: 50px;
-        }
+button {
+    background-color: darkgrey;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    width: 300px;
+    min-height: 50px;
+}
 
-        button:disabled {
-            background-color: grey;
-            cursor: default;
-        }
+button:hover {
+    background-color: #555;
+    color: white;
+}
 
-        #error {
-            color: red;
-            font-weight: bold;
-        }
+button:disabled {
+    background-color: grey;
+    cursor: default;
+}
 
-        #feedback {
-            font-weight: bold;
-        }
-    </style>
+#error {
+    color: red;
+    font-weight: bold;
+}
+
+#feedback {
+    font-weight: bold;
+}
+
+#answers button {
+    display: inline-block;
+}
+
+@media (max-width: 600px) {
+    .quiz {
+        width: 100%;
+        padding: 20px;
+    }
+
+    button {
+        width: 100%;
+    }
+}
