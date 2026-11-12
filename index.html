@@ -155,7 +155,7 @@ let questions = [
     }
 ];
 
-    let currentQuestion§ = "0";
+    let currentQuestion = "0";
     let score = "0";
     let selectedAnswer = "";
     let answer = false;
@@ -163,15 +163,15 @@ let questions = [
     // Display the current question
     function showQuestion () {
         let q = questions[currentQuestion]; 
-         document.getElementById('questionNumber").innerText = "Question " + (currentQuestion + 1) + " of " + questions.length;
+         document.getElementById("questionNumber").innerText = "Question " + (currentQuestion + 1) + " of " + questions.length;
 
-                                 document,getElementById("question").innerText = q.question;
+                                 document.getElementById("question").innerText = q.question;
 
         let answersHTML = "";
 
         q.answers.forEach(function(answer) {
-            answershtml += '
-                <button on click+"selectedAnswer(${answer}')">${answer}</button>
+            answersHTML += '
+                <button onclick="selectedAnswer(${answer}')">${answer}</button>
                           ';
     });
     documentgetElementById("answers").innerHTML = answersHTML;
